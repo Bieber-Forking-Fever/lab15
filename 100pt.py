@@ -55,7 +55,7 @@ class MyApp:
        	    
 
        	        drawpad.pack()
-	
+	        self.animate()
 
 	    # Remember to include your "enemies" with "global"
 	    	
@@ -67,9 +67,8 @@ class MyApp:
 	   drawpad.move(player,0,-10)
 
            x1, y1, x2, y2 = drawpad.coords(player)
-           if (targetx1 < x1 and targetx2 > x2) and (targety1 < y1 and targety2 > y2):
-                drawpad.itemconfig(target, fill = "Red")
-	   else: drawpad.itemconfig(target, fill = "Blue")
+           
+
 		
 	def leftClicked(self, event):   
 	   global circle
@@ -119,20 +118,30 @@ class MyApp:
 
 
 
-
+        direction = 10
         # Animate function that will bounce target left and right, and trigger the collision detection  
 	def animate(self):
 	    global target
 	    global direction
-	    tx1,ty1,tx2,ty2 = drawpad.coords(target)
-	    
+	    targetx1,targety1,targetx2,targety2 = drawpad.coords(target)
+	    drawpad.move(target,direction,0)
 	    # Insert the code here to make the target move, bouncing on the edges    
-	        
-	        
             
-            
-            #  This will trigger our collision detect function
+            if targetx2 > 480: 
+                direction = -10
+            if targetx1 < 0:
+                direction = 10
+
+
+
+   	        
+   	        
+                
+                
+                #  This will trigger our collision detect function
             didWeHit = self.collisionDetect()
+        if  didWeHit == False:
+            drawpad.after(1,self.animate)
             # Use the value of didWeHit to create an if statement
             # that determines whether to run drawpad.after(1,self.animate) or not
             
@@ -141,17 +150,16 @@ class MyApp:
                 global target
 		global drawpad
                 global player
-           x1, y1, x2, y2 = drawpad.coords(target)
-           if (targetx1 < x1 and targetx2 > x2) and (targety1 < y1 and targety2 > y2):
-                return True
-           x1, y1, x2, y2 = drawpad.coords(player)
-           if (targetx1 < x1 and targetx2 > x2) and (targety1 < y1 and targety2 > y2):
-                return True
+                x1, y1, x2, y2 = drawpad.coords(target)
+                tx1,ty1,tx2,ty2 = drawpad.coords(target)
+                if (tx1 < x1 and tx2 > x2) and (ty1 < y1 and ty2 > y2):
+                        return True
+                else:
+                        return False
                 # Get the co-ordinates of our player AND our target
                 # using x1,y1,x2,y2 = drawpad.coords(object)
 
                 # Do your if statement - remember to return True if successful!                
-		
 myapp = MyApp(root)
 
 root.mainloop()
