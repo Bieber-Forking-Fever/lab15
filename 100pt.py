@@ -32,25 +32,94 @@ class MyApp:
 		
 		self.up = Button(self.myContainer1)
 		self.up.configure(text="Up", background= "green")
-		self.up.grid(row=0,column=0)
-					
-		# "Bind" an action to the first button												
-		self.up.bind("<Button-1>", self.moveUp)
-                
-		  
-		# This creates the drawpad - no need to change this 
-		drawpad.pack()
-		self.animate()
+		self.up.grid(row=0,column=1)
 
+					
+       	        self.left = Button(self.myContainer1)
+       	        self.left.configure(text="left", background= "green")
+       	        self.left.grid(row=1,column=0)
+
+       	        self.right = Button(self.myContainer1)
+       	        self.right.configure(text="Right", background= "green")
+       	        self.right.grid(row=1,column=2)
+
+       	        self.down = Button(self.myContainer1)
+       	        self.down.configure(text="Down", background= "green")
+       	        self.down.grid(row=3,column=1)
+    
+
+       	        self.up.bind("<Button-1>", self.upClicked)
+       	        self.left.bind("<Button-1>", self.leftClicked)
+       	        self.down.bind("<Button-1>", self.downClicked)
+       	        self.right.bind("<Button-1>", self.rightClicked)        
+       	    
+
+       	        drawpad.pack()
+	
+
+	    # Remember to include your "enemies" with "global"
+	    	
 		
-	def moveUp(self, event):   
-		global player
-		global drawpad
-                x1,y1,x2,y2 = drawpad.coords(player)
-		# Get the coords of our target
-                drawpad.move(player,0,-10)
+	def upClicked(self, event):   
+	   global circle
+	   global player
+
+	   drawpad.move(player,0,-10)
+
+           x1, y1, x2, y2 = drawpad.coords(player)
+           if (targetx1 < x1 and targetx2 > x2) and (targety1 < y1 and targety2 > y2):
+                drawpad.itemconfig(target, fill = "Red")
+	   else: drawpad.itemconfig(target, fill = "Blue")
+		
+	def leftClicked(self, event):   
+	   global circle
+	   global player
+
+	   drawpad.move(player,-10,0)
+
+           x1, y1, x2, y2 = drawpad.coords(player)
+           if (targetx1 < x1 and targetx2 > x2) and (targety1 < y1 and targety2 > y2):
+                drawpad.itemconfig(target, fill = "Red")
+	   else: drawpad.itemconfig(target, fill = "Blue")
+		
+	def downClicked(self, event):   
+	   global circle
+	   global player
+
+	   drawpad.move(player,0,10)
+
+           x1, y1, x2, y2 = drawpad.coords(player)
+           if (targetx1 < x1 and targetx2 > x2) and (targety1 < y1 and targety2 > y2):
+                drawpad.itemconfig(target, fill = "Red")
+	   else: drawpad.itemconfig(target, fill = "Blue")	
+	
+	def rightClicked(self, event):   
+	   global circle
+	   global player
+
+	   drawpad.move(player,10,0)
+
+           x1, y1, x2, y2 = drawpad.coords(player)
+           if (targetx1 < x1 and targetx2 > x2) and (targety1 < y1 and targety2 > y2):
+                drawpad.itemconfig(target, fill = "Red")
+	   else: drawpad.itemconfig(target, fill = "Blue")
     
          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         # Animate function that will bounce target left and right, and trigger the collision detection  
 	def animate(self):
 	    global target
@@ -72,6 +141,12 @@ class MyApp:
                 global target
 		global drawpad
                 global player
+           x1, y1, x2, y2 = drawpad.coords(target)
+           if (targetx1 < x1 and targetx2 > x2) and (targety1 < y1 and targety2 > y2):
+                return True
+           x1, y1, x2, y2 = drawpad.coords(player)
+           if (targetx1 < x1 and targetx2 > x2) and (targety1 < y1 and targety2 > y2):
+                return True
                 # Get the co-ordinates of our player AND our target
                 # using x1,y1,x2,y2 = drawpad.coords(object)
 
