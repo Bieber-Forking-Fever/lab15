@@ -99,6 +99,21 @@ class MyApp:
            if (targetx1 < x1 and targetx2 > x2) and (targety1 < y1 and targety2 > y2):
                 drawpad.itemconfig(target, fill = "Red")
 	   else: drawpad.itemconfig(target, fill = "Blue")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 myapp = MyApp(root)
 
