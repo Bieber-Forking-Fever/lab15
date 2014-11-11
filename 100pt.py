@@ -63,59 +63,36 @@ class MyApp:
 	def upClicked(self, event):   
 	   global circle
 	   global player
-
 	   drawpad.move(player,0,-10)
-
            x1, y1, x2, y2 = drawpad.coords(player)
-           
-
+           if y1 < 0:
+               drawpad.move(player,0,10)
 		
 	def leftClicked(self, event):   
 	   global circle
 	   global player
-
 	   drawpad.move(player,-10,0)
-
            x1, y1, x2, y2 = drawpad.coords(player)
-           if (targetx1 < x1 and targetx2 > x2) and (targety1 < y1 and targety2 > y2):
-                drawpad.itemconfig(target, fill = "Red")
-	   else: drawpad.itemconfig(target, fill = "Blue")
+           if x1 < 0:
+               drawpad.move(player,10,0)
 		
 	def downClicked(self, event):   
 	   global circle
 	   global player
-
 	   drawpad.move(player,0,10)
-
            x1, y1, x2, y2 = drawpad.coords(player)
-           if (targetx1 < x1 and targetx2 > x2) and (targety1 < y1 and targety2 > y2):
-                drawpad.itemconfig(target, fill = "Red")
-	   else: drawpad.itemconfig(target, fill = "Blue")	
+           if y2 > 320:
+               drawpad.move(player,0,-10)
+		
+	
 	
 	def rightClicked(self, event):   
 	   global circle
 	   global player
-
-	   drawpad.move(player,10,0)
-
+	   drawpad.move(player,10,0)	
            x1, y1, x2, y2 = drawpad.coords(player)
-           if (targetx1 < x1 and targetx2 > x2) and (targety1 < y1 and targety2 > y2):
-                drawpad.itemconfig(target, fill = "Red")
-	   else: drawpad.itemconfig(target, fill = "Blue")
-    
-         
-
-
-
-
-
-
-
-
-
-
-
-
+           if x2 > 480:
+               drawpad.move(player,-10,0)
 
 
         direction = 10
@@ -140,8 +117,8 @@ class MyApp:
                 
                 #  This will trigger our collision detect function
             didWeHit = self.collisionDetect()
-        if  didWeHit == False:
-            drawpad.after(1,self.animate)
+            if  didWeHit == False:
+                drawpad.after(1,self.animate)
             # Use the value of didWeHit to create an if statement
             # that determines whether to run drawpad.after(1,self.animate) or not
             
@@ -150,16 +127,14 @@ class MyApp:
                 global target
 		global drawpad
                 global player
-                x1, y1, x2, y2 = drawpad.coords(target)
+                x1, y1, x2, y2 = drawpad.coords(player)
                 tx1,ty1,tx2,ty2 = drawpad.coords(target)
                 if (tx1 < x1 and tx2 > x2) and (ty1 < y1 and ty2 > y2):
                         return True
                 else:
                         return False
-                # Get the co-ordinates of our player AND our target
-                # using x1,y1,x2,y2 = drawpad.coords(object)
 
-                # Do your if statement - remember to return True if successful!                
+                
 myapp = MyApp(root)
 
 root.mainloop()
